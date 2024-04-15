@@ -1,6 +1,6 @@
 // Map.js
 import React, { useState, useEffect } from 'react';
-import AddMapbox from '../AddMapbox';
+import AddMapbox from './AddMapbox';
 
 const Map = () => {
   const [data, setData] = useState(null);

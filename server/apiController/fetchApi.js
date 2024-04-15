@@ -17,7 +17,7 @@ exports.getTokens = async (url, appId, appSecret) => {
       throw new Error(JSON.stringify(errorData));
     }
     const responseData = await response.json();
-
+    //console.log(responseData.access_token);
     return responseData.access_token;
   } catch (error) {
     throw error;

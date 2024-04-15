@@ -2,6 +2,17 @@ const express = require('express');
 const { getTokens, getLocations } = require('./apiController/fetchApi.js');
 const router = express.Router();
 
+router.get('/mapApi', async (req, res) => {
+  try {
+    const mapApi = process.env.MAPBOX_API_TOKEN;
+    //console.log(mapApi);
+    res.json({ mapboxApiToken: mapApi }); // Return the token as an object
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 router.get('/api', async (req, res) => {
   const url = process.env.PINMETO_API_URL;
   const appId = process.env.PINMETO_APP_ID;
@@ -25,20 +36,18 @@ router.get('/api', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+router.get('/api-Store/:storeId', async (req, res) => {
+  const storeId = req.params.storeId;
+  const url = process.env.PINMETO_API_URL;
+  const appId = process.env.PINMETO_APP_ID;
+  const appSecret = process.env.PINMETO_APP_SECRET;
+  const accountId = process.env.PINMETO_ACCOUNT_ID;
+  const locationsUrl = `https://api.test.pinmeto.com/v2/${accountId}/locations/${storeId}`;
 
-// router.get('/mapApi', async (req, res) => {
-//   try {
-//     const mapApi = process.env.MAPBOX_API_TOKEN;
-//     res.json(mapApi);
-//   } catch (error) {
-//     console.error('Error:', error);
-//     res.status(500).json({ error: 'Internal server error' });
-//   }
-// });
-router.get('/mapApi', async (req, res) => {
   try {
-    const mapApi = process.env.MAPBOX_API_TOKEN;
-    res.json({ mapboxApiToken: mapApi }); // Return the token as an object
+    const accessToken = await getTokens(url, appId, appSecret);
+    const storeInfo = await getLocations(locationsUrl, accessToken);
+    res.json(storeInfo);
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({ error: 'Internal server error' });
