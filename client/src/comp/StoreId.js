@@ -9,6 +9,7 @@ const Store = () => {
   };
 
   const fetchStoreInfo = (storeId) => {
+    // fetch Store info by select the Id from page.
     fetch(`/api-Store/${storeId}`)
       .then((res) => {
         if (!res.ok) {
@@ -31,6 +32,7 @@ const Store = () => {
     <div style={{ margin: '40px' }}>
       <h2>Store Information</h2>
       <label htmlFor="storeIdInput">Enter Store ID:</label>
+      {/* Input field to seletc the Store Id ..===> should change it to click in map  */}
       <input type="text" id="storeIdInput" value={storeId} onChange={handleInputChange} />
 
       {storeInfo && (

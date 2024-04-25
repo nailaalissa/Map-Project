@@ -7,6 +7,7 @@ const AddMapbox = ({ directions }) => {
   const map = useRef(null);
 
   useEffect(() => {
+    // get the MapBox Key to show the map
     fetch('/mapApi')
       .then((res) => res.json())
       .then((data) => {

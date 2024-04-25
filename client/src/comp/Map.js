@@ -6,6 +6,7 @@ const Map = () => {
   const [data, setData] = useState(null);
 
   useEffect(() => {
+    // fetch the PinMeTo Locations
     fetch('/api')
       .then((res) => res.json())
       .then((data) => {
@@ -35,6 +36,7 @@ function renderDirections(data) {
   }
 
   return (
+    // render the Locations Data
     <ul>
       {data.map((direction, index) => (
         <li key={index}>
